@@ -6,10 +6,10 @@ import { Atom, Trait } from '../interface';
 })
 export class AtomEntity implements Atom {
   @PrimaryColumn({ type: 'bigint' })
-  aid: number;
+  aid: string;
 }
 
 export abstract class TraitEntity implements Trait {
-  @PrimaryColumn()
-  aid: number;
+  @PrimaryColumn({ type: 'bigint' })
+  aid: string;
 }

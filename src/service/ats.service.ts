@@ -19,16 +19,16 @@ export class ATSService {
   }
   async addAtom() {
     const atom = this.manager.create(AtomEntity);
-    atom.aid = this.uuid.uuid();
+    atom.aid = this.uuid.uuid() + '';
     await this.manager.save(atom);
     return atom.aid;
   }
-  async delAtom(aid: number) {
+  async delAtom(aid: string) {
     await this.manager.delete(AtomEntity, { aid });
   }
   async createTrait<Entity extends Trait>(
-    aid: number,
-    trait: EntityTarget<Entity>
+    trait: EntityTarget<Entity>,
+    aid: string
   ) {
     const entity = await this.manager.create(trait);
     entity.aid = aid;
@@ -38,14 +38,14 @@ export class ATSService {
     await this.manager.save(trait);
   }
   async delTrait<Entity extends Trait>(
-    aid: number,
-    trait: EntityTarget<Entity>
+    trait: EntityTarget<Entity>,
+    aid: string
   ) {
     await this.manager.delete(trait, { aid });
   }
   async getTrait<Entity extends Trait>(
-    aid: number,
-    trait: EntityTarget<Entity>
+    trait: EntityTarget<Entity>,
+    aid: string
   ) {
     return this.manager.findOne<Atom>(trait, { where: { aid } });
   }
