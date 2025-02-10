@@ -1,0 +1,53 @@
+{
+  "name": "@wbget/midway-ats",
+  "version": "0.0.2",
+  "description": "midwayjs ats module",
+  "main": "dist/index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "build": "mwtsc --cleanOutDir",
+    "release": "npm run build && npx np --no-cleanup --no-tests --no-2fa",
+    "test": "cross-env NODE_ENV=unittest jest",
+    "cov": "jest --coverage",
+    "lint": "mwts check",
+    "lint:fix": "mwts fix"
+  },
+  "keywords": [
+    "ecs",
+    "ats",
+    "midway"
+  ],
+  "author": "wbget",
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "index.d.ts"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@midwayjs/core": "^3.12.0",
+    "@midwayjs/logger": "^3.1.0",
+    "@midwayjs/mock": "^3.12.0",
+    "@types/jest": "^29.2.0",
+    "@types/node": "^16.11.22",
+    "cross-env": "^6.0.0",
+    "jest": "^29.2.2",
+    "mwts": "^1.3.0",
+    "mwtsc": "^1.4.0",
+    "ts-jest": "^29.0.3",
+    "typescript": "~4.8.0",
+    "np": "^7.6.2"
+  },
+  "dependencies": {
+    "@midwayjs/typeorm": "^3.11.15",
+    "@wbget/midway-uuid-int": "^1.1.0",
+    "mysql2": "^3.5.2",
+    "typeorm": "^0.3.17"
+  },
+  "np": {
+    "yarn": false
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
