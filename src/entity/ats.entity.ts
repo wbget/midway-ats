@@ -1,7 +1,9 @@
 import { Entity, PrimaryColumn } from 'typeorm';
 import { Atom, Trait } from '../interface';
 
-@Entity()
+@Entity({
+  name: 'atom',
+})
 export class AtomEntity implements Atom {
   @PrimaryColumn()
   aid: number;
