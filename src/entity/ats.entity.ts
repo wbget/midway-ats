@@ -5,7 +5,7 @@ import { Atom, Trait } from '../interface';
   name: 'atom',
 })
 export class AtomEntity implements Atom {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'bigint' })
   aid: number;
 }
 
