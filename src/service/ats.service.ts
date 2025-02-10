@@ -53,6 +53,11 @@ export class ATSService {
     return this.manager.find(trait);
   }
 
+  /**
+   *
+   * @param traits 按顺序过滤，传参数时请按照从最细到最宽的顺序传递
+   * @returns
+   */
   async getAtoms<Entity extends Trait>(traits: EntityTarget<Entity>[]) {
     if (traits.length === 0) {
       return [];
