@@ -1,6 +1,6 @@
 {
   "name": "@wbget/midway-ats",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "midwayjs ats module",
   "main": "dist/index.js",
   "typings": "index.d.ts",
