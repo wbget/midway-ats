@@ -2,7 +2,7 @@ import { Init, Inject, Provide } from '@midwayjs/core';
 import { InjectDataSource } from '@midwayjs/typeorm';
 import { UUIDIntService } from '@wbget/midway-uuid-int';
 import { DataSource, EntityManager, EntityTarget, In } from 'typeorm';
-import { Atom, Trait } from '../interface';
+import { Trait } from '../interface';
 import { AtomEntity } from '../entity/ats.entity';
 
 @Provide()
@@ -48,7 +48,9 @@ export class ATSService {
     trait: EntityTarget<Entity>,
     aid: string
   ) {
-    return this.manager.findOne<Atom>(trait, { where: { aid } });
+    return (await this.manager.findOne<Trait>(trait, {
+      where: { aid },
+    })) as Entity;
   }
   async getTraits<Entity extends Trait>(trait: EntityTarget<Entity>) {
     return this.manager.find(trait);
@@ -72,7 +74,7 @@ export class ATSService {
       return aids;
     }
     for await (const entity of traits.slice(1)) {
-      const ids = await this.manager.find<Atom>(entity, {
+      const ids = await this.manager.find<Trait>(entity, {
         select: ['aid'],
         where: { aid: In(aids) },
       });
