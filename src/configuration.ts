@@ -40,7 +40,7 @@ export class ATSConfiguration {
           return this.dataSource.manager.transaction(async manager => {
             const instance = joinPoint.target;
             const ctx = instance[REQUEST_OBJ_CTX_KEY];
-            const ats = await ctx.getAsync(ATSService);
+            const ats = await ctx.requestContext.getAsync(ATSService);
             const old = ats.manager;
             ats.manager = manager;
             const result = await joinPoint.proceed(...joinPoint.args);
