@@ -19,10 +19,6 @@ describe('/test/index.test.ts', () => {
     const res = await createHttpRequest(app).get('/');
     expect(res.status).toBe(200);
   });
-  // it('test request /noGuard', async () => {
-  //   const res = await createHttpRequest(app).get('/noGuard');
-  //   expect(res.status).toBe(403);
-  // });
   it('test atom', async () => {
     const service = await app
       .getApplicationContext()
@@ -66,5 +62,9 @@ describe('/test/index.test.ts', () => {
     expect(aids1).toEqual([aid1, aid2]);
     const aids2 = await service.getAtoms([TestTrait0, TestTrait1]);
     expect(aids2).toEqual([aid1]);
+  });
+  it('test transaction', async () => {
+    const res = await createHttpRequest(app).get('/transaction');
+    expect(res.body).toBe(0);
   });
 });

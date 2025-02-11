@@ -11,7 +11,8 @@ export class ATSService {
   private dataSource: DataSource;
   @Inject()
   private uuid: UUIDIntService;
-  private manager: EntityManager;
+
+  manager: EntityManager;
 
   @Init()
   async init() {
@@ -30,7 +31,7 @@ export class ATSService {
     trait: EntityTarget<Entity>,
     aid: string
   ) {
-    const entity = await this.manager.create(trait);
+    const entity = this.manager.create(trait);
     entity.aid = aid;
     return entity;
   }

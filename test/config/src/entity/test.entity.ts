@@ -13,3 +13,9 @@ export class TestTrait1 {
   @Column({ nullable: true })
   ff: string;
 }
+
+@Entity()
+export class TestTransaction {
+  @Column({ type: 'bigint', primary: true })
+  aid: string;
+}
