@@ -5,6 +5,7 @@ import {
   JoinPoint,
   Logger,
   MidwayDecoratorService,
+  REQUEST_OBJ_CTX_KEY,
 } from '@midwayjs/core';
 import * as typeorm from '@midwayjs/typeorm';
 import { join } from 'path';
@@ -13,6 +14,7 @@ import * as koa from '@midwayjs/koa';
 import { TRANSACTION_KEY } from './transaction/interface.transaction';
 import { InjectDataSource } from '@midwayjs/typeorm';
 import { DataSource } from 'typeorm';
+import { ATSService } from './service/ats.service';
 
 @Configuration({
   namespace: 'ats',
@@ -36,7 +38,14 @@ export class ATSConfiguration {
       return {
         around: async (joinPoint: JoinPoint) => {
           return this.dataSource.manager.transaction(async manager => {
-            return joinPoint.proceed(manager, ...joinPoint.args);
+            const instance = joinPoint.target;
+            const ctx = instance[REQUEST_OBJ_CTX_KEY];
+            const ats = await ctx.getAsync(ATSService);
+            const old = ats.manager;
+            ats.manager = manager;
+            const result = await joinPoint.proceed(...joinPoint.args);
+            ats.manager = old;
+            return result;
           });
         },
       };

@@ -12,7 +12,7 @@ export const typeorm = {
       password: '123456',
       timezone: '+08:00',
       entities: ['**/entity/**/*{.ts,.js}'],
-      logging: ['warn', 'error'],
+      // logging: ['warn', 'error'],
     },
   },
 };

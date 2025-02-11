@@ -1,4 +1,4 @@
-import { Init, Inject, Provide } from '@midwayjs/core';
+import { Init, Inject, Provide, Scope, ScopeEnum } from '@midwayjs/core';
 import { InjectDataSource } from '@midwayjs/typeorm';
 import { UUIDIntService } from '@wbget/midway-uuid-int';
 import { DataSource, EntityManager, EntityTarget, In } from 'typeorm';
@@ -6,9 +6,10 @@ import { Trait } from '../interface';
 import { AtomEntity } from '../entity/ats.entity';
 
 @Provide()
+@Scope(ScopeEnum.Singleton)
 export class ATSService {
   @InjectDataSource()
-  private dataSource: DataSource;
+  dataSource: DataSource;
   @Inject()
   private uuid: UUIDIntService;
 
