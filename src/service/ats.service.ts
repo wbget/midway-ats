@@ -52,8 +52,17 @@ export class ATSService {
       where: { aid },
     })) as Entity;
   }
-  async getTraits<Entity extends Trait>(trait: EntityTarget<Entity>) {
-    return this.manager.find(trait);
+  async getTraits<Entity extends Trait>(
+    trait: EntityTarget<Entity>,
+    aids: string[] = null
+  ) {
+    if (aids === null) {
+      return this.manager.find(trait);
+    } else {
+      return (await this.manager.find<Trait>(trait, {
+        where: { aid: In(aids) },
+      })) as Entity[];
+    }
   }
 
   /**
