@@ -9,6 +9,8 @@ describe('/test/index.test.ts', () => {
   let app: Application;
   beforeAll(async () => {
     app = await createApp<Framework>(join(__dirname, './config'));
+  });
+  beforeEach(async () => {
     const service = await app.getApplicationContext().getAsync(MockService);
     await service.clear();
   });
@@ -63,7 +65,11 @@ describe('/test/index.test.ts', () => {
     const aids2 = await service.getAtoms([TestTrait0, TestTrait1]);
     expect(aids2).toEqual([aid1]);
   });
-  it('test transaction', async () => {
+  it('test transaction one service', async () => {
+    const res = await createHttpRequest(app).get('/transaction');
+    expect(res.body).toBe(0);
+  });
+  it('test transaction many service', async () => {
     const res = await createHttpRequest(app).get('/transaction');
     expect(res.body).toBe(0);
   });

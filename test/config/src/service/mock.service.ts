@@ -17,4 +17,7 @@ export class MockService {
       await manager.clear(AtomEntity);
     });
   }
+  async stop() {
+    throw new Error('stop');
+  }
 }
