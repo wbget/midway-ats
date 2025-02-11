@@ -22,6 +22,6 @@ export const koa = {
 };
 export const midwayLogger: MidwayConfig['midwayLogger'] = {
   default: {
-    level: 'error',
+    level: 'warn',
   },
 };

@@ -65,6 +65,10 @@ describe('/test/index.test.ts', () => {
     const aids2 = await service.getAtoms([TestTrait0, TestTrait1]);
     expect(aids2).toEqual([aid1]);
   });
+  it('test transaction service', async () => {
+    const res = await createHttpRequest(app).post('/transaction');
+    expect(res.body === 2);
+  });
   it('test transaction one service', async () => {
     await createHttpRequest(app).get('/transaction');
   });
