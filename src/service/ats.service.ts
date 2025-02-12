@@ -54,15 +54,18 @@ export class ATSService {
   ) {
     await this.manager.delete(trait, { id });
   }
-  async getTrait<Entity extends Trait>(trait: EntityTarget<Entity>, id: string);
+  async getTrait<Entity extends Trait>(
+    trait: EntityTarget<Entity>,
+    id: string
+  ): Promise<Entity>;
   async getTrait<Entity extends Trait>(
     trait: EntityTarget<Entity>,
     options: FindOneOptions<Entity>
-  );
+  ): Promise<Entity>;
   async getTrait<Entity extends Trait>(
     trait: EntityTarget<Entity>,
     options: FindOneOptions<Entity> | string
-  ) {
+  ): Promise<Entity> {
     if (isString(options)) {
       return this.manager.findOne<Entity>(trait, {
         where: { id: options },
