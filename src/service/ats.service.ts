@@ -21,19 +21,19 @@ export class ATSService {
   }
   async addAtom() {
     const atom = this.manager.create(AtomEntity);
-    atom.aid = this.uuid.uuid() + '';
+    atom.id = this.uuid.uuid() + '';
     await this.manager.save(atom);
-    return atom.aid;
+    return atom.id;
   }
-  async delAtom(aid: string) {
-    await this.manager.delete(AtomEntity, { aid });
+  async delAtom(id: string) {
+    await this.manager.delete(AtomEntity, { id });
   }
   async createTrait<Entity extends Trait>(
     trait: EntityTarget<Entity>,
-    aid: string
+    id: string
   ) {
     const entity = this.manager.create(trait);
-    entity.aid = aid;
+    entity.id = id;
     return entity;
   }
   async saveTrait<Entity extends Trait>(trait: Entity) {
@@ -41,27 +41,27 @@ export class ATSService {
   }
   async delTrait<Entity extends Trait>(
     trait: EntityTarget<Entity>,
-    aid: string
+    id: string
   ) {
-    await this.manager.delete(trait, { aid });
+    await this.manager.delete(trait, { id });
   }
   async getTrait<Entity extends Trait>(
     trait: EntityTarget<Entity>,
-    aid: string
+    id: string
   ) {
     return (await this.manager.findOne<Trait>(trait, {
-      where: { aid },
+      where: { id },
     })) as Entity;
   }
   async getTraits<Entity extends Trait>(
     trait: EntityTarget<Entity>,
-    aids: string[] = null
+    ids: string[] = null
   ) {
-    if (aids === null) {
+    if (ids === null) {
       return this.manager.find(trait);
     } else {
       return (await this.manager.find<Trait>(trait, {
-        where: { aid: In(aids) },
+        where: { id: In(ids) },
       })) as Entity[];
     }
   }
@@ -77,19 +77,19 @@ export class ATSService {
     }
     // TODO 加速查找
     const atoms: Entity[] = await this.manager.find(traits[0], {
-      select: ['aid'],
+      select: ['id'],
     });
-    let aids = atoms.map(atom => atom.aid);
+    let ids = atoms.map(atom => atom.id);
     if (traits.length === 1) {
-      return aids;
+      return ids;
     }
     for await (const entity of traits.slice(1)) {
-      const ids = await this.manager.find<Trait>(entity, {
-        select: ['aid'],
-        where: { aid: In(aids) },
+      const tids = await this.manager.find<Trait>(entity, {
+        select: ['id'],
+        where: { id: In(ids) },
       });
-      aids = ids.map(id => id.aid);
+      ids = tids.map(id => id.id);
     }
-    return aids;
+    return ids;
   }
 }

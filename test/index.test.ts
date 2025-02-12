@@ -25,54 +25,55 @@ describe('/test/index.test.ts', () => {
     const service = await app
       .getApplicationContext()
       .getAsync(custom.ATSService);
-    const aid = await service.addAtom();
-    expect(aid !== null);
-    await service.delAtom(aid);
+    const id = await service.addAtom();
+    expect(id).toBeDefined();
+    await service.delAtom(id);
   });
   it('tset trait', async () => {
     const service = await app
       .getApplicationContext()
       .getAsync(custom.ATSService);
-    const aid = await service.addAtom();
-    const trait = await service.createTrait(TestTrait0, aid);
-    expect(trait.aid).toBe(aid);
-    const t0 = await service.getTrait(TestTrait0, trait.aid);
-    expect(t0 === null);
+    const id = await service.addAtom();
+    const trait = await service.createTrait(TestTrait0, id);
+    expect(trait.id).toBe(id);
+    const t0 = await service.getTrait(TestTrait0, trait.id);
+    expect(t0).toBeNull();
     await service.saveTrait(trait);
-    const t1 = await service.getTrait(TestTrait0, trait.aid);
-    await service.delTrait(TestTrait0, t1!.aid);
-    await service.delAtom(aid);
+    const t1 = await service.getTrait(TestTrait0, trait.id);
+    await service.delTrait(TestTrait0, t1!.id);
+    await service.delAtom(id);
   });
   it('test getAtoms', async () => {
     const service = await app
       .getApplicationContext()
       .getAsync(custom.ATSService);
-    const aid0 = await service.addAtom();
-    const aid1 = await service.addAtom();
-    const aid2 = await service.addAtom();
-    const t00 = await service.createTrait(TestTrait0, aid0);
+    const id0 = await service.addAtom();
+    const id1 = await service.addAtom();
+    const id2 = await service.addAtom();
+    const t00 = await service.createTrait(TestTrait0, id0);
     await service.saveTrait(t00);
-    const t01 = await service.createTrait(TestTrait0, aid1);
+    const t01 = await service.createTrait(TestTrait0, id1);
     await service.saveTrait(t01);
-    const t11 = await service.createTrait(TestTrait1, aid1);
+    const t11 = await service.createTrait(TestTrait1, id1);
     await service.saveTrait(t11);
-    const t12 = await service.createTrait(TestTrait1, aid2);
+    const t12 = await service.createTrait(TestTrait1, id2);
     await service.saveTrait(t12);
-    const aids0 = await service.getAtoms([TestTrait0]);
-    expect(aids0).toEqual([aid0, aid1]);
-    const aids1 = await service.getAtoms([TestTrait1]);
-    expect(aids1).toEqual([aid1, aid2]);
-    const aids2 = await service.getAtoms([TestTrait0, TestTrait1]);
-    expect(aids2).toEqual([aid1]);
+    const ids0 = await service.getAtoms([TestTrait0]);
+    expect(ids0).toEqual([id0, id1]);
+    const ids1 = await service.getAtoms([TestTrait1]);
+    expect(ids1).toEqual([id1, id2]);
+    const ids2 = await service.getAtoms([TestTrait0, TestTrait1]);
+    expect(ids2).toEqual([id1]);
   });
   it('test transaction service', async () => {
     const res = await createHttpRequest(app).post('/transaction');
-    expect(res.body === 2);
+    expect(res.body).toBe(2);
   });
   it('test transaction one service', async () => {
     await createHttpRequest(app).get('/transaction');
   });
   it('test transaction many service', async () => {
-    await createHttpRequest(app).get('/transaction');
+    const res = await createHttpRequest(app).get('/stop');
+    expect(res.body).toBe(2);
   });
 });

@@ -9,13 +9,10 @@ export class TestTrait0 extends TraitEntity {
 @Entity()
 export class TestTrait1 {
   @Column({ type: 'bigint', primary: true })
-  aid: string;
+  id: string;
   @Column({ nullable: true })
   ff: string;
 }
 
 @Entity()
-export class TestTransaction {
-  @Column({ type: 'bigint', primary: true })
-  aid: string;
-}
+export class TestTransaction extends TraitEntity {}
