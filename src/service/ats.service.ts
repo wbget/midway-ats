@@ -6,7 +6,6 @@ import {
   DataSource,
   EntityManager,
   EntityTarget,
-  FindManyOptions,
   FindOneOptions,
   FindOptionsWhere,
   In,
