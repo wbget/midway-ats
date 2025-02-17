@@ -72,7 +72,7 @@ export class ATSService {
     }
     return this.manager.findOne<Entity>(trait, options);
   }
-  async getTraits<Entity extends Trait>(trait: EntityTarget<Entity>) {
+  getTraits<Entity extends Trait>(trait: EntityTarget<Entity>) {
     const Model = this.manager.getRepository(trait);
     return Model.createQueryBuilder();
   }
