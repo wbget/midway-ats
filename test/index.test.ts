@@ -75,5 +75,7 @@ describe('/test/index.test.ts', () => {
   it('test transaction many service', async () => {
     const res = await createHttpRequest(app).get('/stop');
     expect(res.body).toBe(2);
+    const res1 = await createHttpRequest(app).post('/transaction');
+    expect(res1.body).toBe(4);
   });
 });

@@ -43,9 +43,14 @@ export class ATSConfiguration {
             const ats = await ctx.requestContext.getAsync(ATSService);
             const old = ats.manager;
             ats.manager = manager;
-            const result = await joinPoint.proceed(...joinPoint.args);
-            ats.manager = old;
-            return result;
+            try {
+              const result = await joinPoint.proceed(...joinPoint.args);
+              return result;
+            } catch (error) {
+              throw error;
+            } finally {
+              ats.manager = old;
+            }
           });
         },
       };
