@@ -72,9 +72,8 @@ export class ATSService {
     }
     return this.manager.findOne<Entity>(trait, options);
   }
-  getTraits<Entity extends Trait>(trait: EntityTarget<Entity>) {
-    const Model = this.manager.getRepository(trait);
-    return Model.createQueryBuilder();
+  getRepository<Entity extends Trait>(trait: EntityTarget<Entity>) {
+    return this.manager.getRepository(trait);
   }
 
   /**
