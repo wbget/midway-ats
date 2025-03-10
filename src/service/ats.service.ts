@@ -72,10 +72,13 @@ export class ATSService {
     }
     return this.manager.findOne<Entity>(trait, options);
   }
-  getRepository<Entity extends Trait>(trait: EntityTarget<Entity>) {
+  getRepository<Entity>(trait: EntityTarget<Entity>) {
     return this.manager.getRepository(trait);
   }
 
+  getManager() {
+    return this.manager;
+  }
   /**
    *
    * @param traits 按顺序过滤，传参数时请按照从最细到最宽的顺序传递
