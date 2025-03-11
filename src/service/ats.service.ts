@@ -1,7 +1,7 @@
 import { Init, Inject, Provide, Scope, ScopeEnum } from '@midwayjs/core';
 import { InjectDataSource } from '@midwayjs/typeorm';
 import { UUIDIntService } from '@wbget/midway-uuid-int';
-import { isString } from 'lodash';
+import { isArray, isString } from 'lodash';
 import {
   DataSource,
   EntityManager,
@@ -79,10 +79,26 @@ export class ATSService {
     }
     return this.manager.findOne<Entity>(trait, options);
   }
+
+  async getTraits<Entity extends Trait>(
+    trait: EntityTarget<Entity>,
+    ids: string[]
+  ): Promise<Entity[]>;
   async getTraits<Entity extends Trait>(
     trait: EntityTarget<Entity>,
     options: FindManyOptions<Entity>
+  ): Promise<Entity[]>;
+  async getTraits<Entity extends Trait>(
+    trait: EntityTarget<Entity>,
+    options: FindManyOptions<Entity> | string[]
   ): Promise<Entity[]> {
+    if (isArray(options)) {
+      return this.manager.find(trait, {
+        where: {
+          id: In(options),
+        } as FindOptionsWhere<Entity>,
+      });
+    }
     return this.manager.find(trait, options);
   }
   getRepository<Entity>(trait: EntityTarget<Entity>) {
