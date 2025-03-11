@@ -81,6 +81,9 @@ export class ATSService {
   }
 
   async getTraits<Entity extends Trait>(
+    trait: EntityTarget<Entity>
+  ): Promise<Entity[]>;
+  async getTraits<Entity extends Trait>(
     trait: EntityTarget<Entity>,
     ids: string[]
   ): Promise<Entity[]>;
@@ -90,8 +93,11 @@ export class ATSService {
   ): Promise<Entity[]>;
   async getTraits<Entity extends Trait>(
     trait: EntityTarget<Entity>,
-    options: FindManyOptions<Entity> | string[]
+    options?: FindManyOptions<Entity> | string[]
   ): Promise<Entity[]> {
+    if (options === undefined) {
+      return this.manager.find(trait);
+    }
     if (isArray(options)) {
       return this.manager.find(trait, {
         where: {
