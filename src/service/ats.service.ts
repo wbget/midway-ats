@@ -58,7 +58,7 @@ export class ATSService {
     trait: EntityTarget<Entity>,
     id: string | string[]
   ) {
-    await this.manager.delete(trait, id);
+    return this.manager.delete(trait, id);
   }
   async getTrait<Entity extends Trait>(
     trait: EntityTarget<Entity>,
