@@ -47,11 +47,17 @@ export class ATSService {
   async saveTrait<Entity extends Trait>(trait: Entity) {
     await this.manager.save(trait);
   }
+
+  async delTrait<Entity extends Trait>(trait: EntityTarget<Entity>, id: string);
   async delTrait<Entity extends Trait>(
     trait: EntityTarget<Entity>,
-    id: string
+    ids: string[]
+  );
+  async delTrait<Entity extends Trait>(
+    trait: EntityTarget<Entity>,
+    id: string | string[]
   ) {
-    await this.manager.delete(trait, { id });
+    await this.manager.delete(trait, id);
   }
   async getTrait<Entity extends Trait>(
     trait: EntityTarget<Entity>,
