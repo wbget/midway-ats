@@ -6,6 +6,7 @@ import {
   DataSource,
   EntityManager,
   EntityTarget,
+  FindManyOptions,
   FindOneOptions,
   FindOptionsWhere,
   In,
@@ -77,6 +78,12 @@ export class ATSService {
       } as FindOneOptions<Entity>);
     }
     return this.manager.findOne<Entity>(trait, options);
+  }
+  async getTraits<Entity extends Trait>(
+    trait: EntityTarget<Entity>,
+    options: FindManyOptions<Entity>
+  ): Promise<Entity[]> {
+    return this.manager.find(trait, options);
   }
   getRepository<Entity>(trait: EntityTarget<Entity>) {
     return this.manager.getRepository(trait);
